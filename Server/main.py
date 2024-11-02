@@ -426,5 +426,5 @@ if __name__ == '__main__':
         os.path.join(os.getcwd(), 'static', 'index.js'),
         os.path.join(os.getcwd(), 'templates', 'index.html')
     ]
-    socketio.run(app,port=8080,debug=True, extra_files=extra_files,host='0.0.0.0') 
+    socketio.run(app,port=5000,debug=True, extra_files=extra_files,host='0.0.0.0') 
 
