@@ -1,11 +1,7 @@
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-SMTP_SERVER = "smtp.gmail.com"
-SMTP_PORT = "587"
-SMTP_USERNAME  = "brawlingbandits@gmail.com"
-SMTP_PASSWORD = "nmjm kooe lsir eumj"
-EMAIL_FROM = "brawlingbandits@gmail.com"
+
 
 
 def sendEmail(token,email):
