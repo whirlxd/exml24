@@ -46,10 +46,49 @@ def reset():
     print("Resetting")
     os._exit(0)   
 
-def process(board,points):
-    move = [[0,0,0,1],[0,0,0,1],[0,0,0,1],[0,0,0,1]]
-    time.sleep(5)
-    send_move(move)
+def process(board, points):
+    import numpy as np
+    from collections import deque
+
+    def find_ghost_positions(board):
+        ghosts = {}
+        for i, row in enumerate(board):
+            for j, cell in enumerate(row):
+                if cell in 'abcd':
+                    ghosts[cell] = (i, j)
+        return ghosts
+
+    def find_pacman(board):
+        for i, row in enumerate(board):
+            for j, cell in enumerate(row):
+                if cell == 'p':
+                    return (i, j)
+        return None
+
+    def get_move_direction(start, end):
+        dx = end[0] - start[0]
+        dy = end[1] - start[1]
+        if abs(dx) > abs(dy):
+            return 0 if dx < 0 else 1  # Up or Down
+        else:
+            return 2 if dy < 0 else 3  # Left or Right
+
+    pacman_position = find_pacman(board)
+    ghost_positions = find_ghost_positions(board)
+
+    ghost_moves = []
+    for ghost_id in ['a', 'b', 'c', 'd']:
+        move = [0, 0, 0, 0]
+        ghost_pos = ghost_positions.get(ghost_id)
+        if ghost_pos:
+            direction = get_move_direction(ghost_pos, pacman_position)
+            move[direction] = 1
+        else:
+            # Default action if ghost position not found
+            move[0] = 1  # Move up
+        ghost_moves.append(move)
+
+    send_move(ghost_moves)
 
 def send_move(move):
    url = f"{link}/move/ghost"
